@@ -16,9 +16,9 @@ const socials = [
 
 
 const solutions = [
-  { link: "https://www.device42.com/device42-for-dcim/", title: "Device42 as DCIM/CMDB" },
-  { link: "https://www.device42.com/device42-for-it-operations/", title: "Device42 for IT Operations" },
-  { link: "https://www.device42.com/device42-for-transformation/", title: "Device42 for Transformation" },
+  { link: "https://www.device42.com/features/data-center-management/", title: "Device42 as DCIM/CMDB" },
+  { link: "https://www.device42.com/it-operations/", title: "Device42 for IT Operations" },
+  { link: "https://www.device42.com/transformation-migration/", title: "Device42 for Transformation" },
   { link: "https://www.device42.com/tours/", title: "Solution Tours" },
   { link: "https://www.device42.com/features/device-discovery/", title: "Infrastructure and IaaS Discovery" },
   { link: "https://www.device42.com/features/application-mappings/", title: "Application Dependency Mappings" },
@@ -43,7 +43,7 @@ const quickNavigation = [
   { link: "https://www.device42.com/blog/", title: "Blog" },
   { link: "https://www.device42.com/contact/", title: "Contact Us" },
   { link: "https://docs.device42.com/", title: "Documentation" },
-  { link: "https://www.device42.com/download/", title: "Free Trial" },
+  { link: "https://www.device42.com/try-device42/", title: "Free Trial" },
   { link: "https://www.device42.com/use-cases/", title: "Use Cases" },
   { link: "https://www.device42.com/eula/", title: "End User License Agreement" }
 ]
@@ -125,15 +125,15 @@ const Footer = () => {
               <div>
                 <div>
                   <a href="/">
-                    <img width="285" height="68" alt="Device42"
-                         src="img/logo-dark.svg"/>
+                    <img width="261" height="80" alt="Device42"
+                         src="img/device42-fw-white.webp"/>
                   </a>
                 </div>
                 <p>
                     <span>
                       &copy;&nbsp;{new Date().getFullYear()}&nbsp;
                     </span>
-                  Device42, Inc. All rights are reserved.
+                  Freshworks Inc. All rights reserved.
                 </p>
               </div>
               <div>
@@ -148,6 +148,8 @@ const Footer = () => {
                 <div className={styles.footerAddress}>
                   <div><a href="mailto:info@device42.com">info@device42.com</a></div>
                   <div><a href="https://www.device42.com/privacy/">Privacy Policy</a></div>
+                  <div><a href="https://www.freshworks.com/accessibility/">Accessibility</a></div>
+                  <div><a href="https://www.freshworks.com/privacy/ccpa-requests/">Do Not Share My Personal Information</a></div>
                 </div>
               </div>
               <div>

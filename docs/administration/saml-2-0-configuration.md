@@ -1,6 +1,6 @@
 ---
 title: "SAML 2.0 Configuration"
-sidebar_position: 12
+sidebar_position: 13
 ---
 
 Device42 integrates with SAML 2.0 in conjunction with AD or LDAP user synchronizations to provide Single Sign On (SSO) support in Device42. Once users are added to Device42 via Active Directory or LDAP, they will automatically be logged into Device42 when they load the site.
@@ -61,7 +61,7 @@ Copy metadata url from endpoints
 
 ![](/assets/images/image2.png)
 
-3\. Enter `https://<D42-FQDN-or-IP>/saml2_auth/acs` in Identifier (Entity ID) and Reply URL (Assertion Consumer Service URL) in Section 1 Basic SAML Config.
+3\. Enter `https://<D42-FQDN-or-IP>/saml2_auth/acs/` in Identifier (Entity ID) and Reply URL (Assertion Consumer Service URL) in Section 1 Basic SAML Config.
 
 ![](/assets/images/image3.png)
 
@@ -69,10 +69,14 @@ Copy metadata url from endpoints
 
 ![](/assets/images/image4.png)
 
-5\. While still in the SAML 2.0 settings of the Appliance Manager, enter `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/**SAML_Attribute**` to map the Azure AD value to the appropriate SAML attribute. Save and restart the appliance from the VM console menu with option 4. You may wish to complete steps 6 and 7 before saving/restarting so that you can still login to D42 and create users with the local admin account you've used so far. The SAML attributes tested successfully are listed below-
+5\. While still in the SAML 2.0 settings of the Appliance Manager, enter `username` or other appropriate SAML attribute.
 
-- **emailaddress**\- Email address associated with user account in Azure AD
-- **name**\- User Principal Name (UPN) associated with user account in Azure AD ![](/assets/images/image-2021-04-26-17-29-20-178.png)
+Save and restart the appliance from the VM console menu with option 4. You may wish to complete steps 6 and 7 before saving/restarting so that you can still login to D42 and create users with the local admin account you've used so far. The SAML attributes tested successfully are listed below:
+
+- **emailaddress** - Email address associated with user account in Azure AD
+- **name** - User Principal Name (UPN) associated with user account in Azure AD 
+
+![Enter SAML username](/assets/images/saml-username.png)
 
 6\. Assign users/groups to the SAML enterprise app you created in Azure AD. These should be users/groups that you want to allow authentication into Device42 via this SAML integration.
 
@@ -172,7 +176,7 @@ To configure SAML2 integration between OneLogin and Device42, you have to create
 
 **In Device42 Appliance Manager Configuration**
 
-Login to Device42 Appliance Manager, [https://yourdevice42address:4343](https://yourdevice42address:4343/ "https://yourdevice42address:4343/"), and go to the SAML 2.0 settings on the left, then set the Metadata url you obtained above.
+Login to Device42 Appliance Manager, `https://yourdevice42address:4343`, and go to the SAML 2.0 settings on the left, then set the Metadata url you obtained above.
 
 ![](/assets/images/D42-26961_saml_config_10.jpg)
 
@@ -217,7 +221,7 @@ Now you can log into Device42 using the OneLogin account.
 
 ### Device42 Appliance Manager Configuration
 
-Login to Device42 Appliance Manager, https://yourdevice42address:4343, and go to the SAML 2.0 settings on the left, then set the Metadata url you obtained above. Set the "username" field to match the value you saved in the SAML configuration.
+Login to Device42 Appliance Manager, `https://yourdevice42address:4343`, and go to the SAML 2.0 settings on the left, then set the Metadata url you obtained above. Set the "username" field to match the value you saved in the SAML configuration.
 
 ![](/assets/images/D42-26961_saml_config_10.jpg)
 

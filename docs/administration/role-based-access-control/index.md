@@ -1,0 +1,309 @@
+---
+title: "Role-Based Access Control"
+---
+
+import ThemedImage from "@theme/ThemedImage";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+
+
+## Role-Based Access Control Overview
+
+Device42 supports role-based access control, which is useful in several cases. A corporation might want to restrict access by location, department, division, and corporate entity. For example, you might want a user to access only one department while another user has access to all departments within a division.
+
+Or you as a service provider might allocate subnets or racks to customers. The role-based access feature enables you to restrict customer access to specific subnets and racks.
+
+## Setting Up Role-Based Access
+
+To set up role-based access in Device42, navigate to **Tools > Settings > Global Settings**, and click **Edit** at the top right of the page.
+
+<ThemedImage
+  alt="Global Settings role-based access control"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/role-based-settings-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/role-based-settings-dark.png"),
+  }}
+/>
+
+You can toggle the **Role-Based Access Control Option** options:
+
+- **On:** Choose this option to enable role-based access.
+- **Off:** _This is the default._ Turns off role-based access. 
+
+See the [Orphaned Objects](#orphaned-objects) section for details about the three checkbox options.
+
+Click **Save** at the bottom of the Global Settings page to save your selections.
+
+## Viewing Role-Based Access Permissions
+
+In the view page for every object with permissions, there is a view-only field named “Group Permissions”:
+
+<ThemedImage
+  alt="View Group Permissions"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/view-permissions-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/view-permissions-dark.png"),
+  }}
+/>
+
+The “Group Permissions” field tells you what groups are assigned to this device based on:
+- any groups assigned via device categories
+- groups assigned via buildings, rooms, or racks containing the device
+- VMs and blade chassis containing the device
+
+The group view and edit screens for admin groups have three additional buttons:
+
+<ThemedImage
+  alt="Permission buttons"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/permission-options-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/permission-options-dark.png"),
+  }}
+  style={{ width: '90%' }} 
+/>
+
+The **Direct Permissions** option shows a list of all objects that have been directly assigned to the group. If the group has been assigned to a specific device, the device will appear in the report. If the group has been assigned a building, devices in the building that do not have a direct group assignment will not be shown even though these devices inherit permissions from the building. 
+
+<ThemedImage
+  alt="View Direct Permissions"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/direct-permissions-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/direct-permissions-dark.png"),
+  }}
+  style={{ width: '80%' }} 
+/>
+
+If you click the **Inherited Permissions** button, you'll see only the inherited permissions. The **All Permissions** button shows both the direct and inherited permissions for objects for this group. 
+
+The list pages for permissioned objects have two useful types of filters:
+- filter by an admin group to see all the objects that the group can view
+- filter by an object or subnet category to see all objects that can be seen by groups with view permissions for the category.
+
+## Do Not Propagate Option
+
+<ThemedImage
+  alt="Edit object category"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/do-not-propagate-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/do-not-propagate-dark.png"),
+  }}
+/>
+
+The **Do Not Propagate** option can be set on buildings, rooms, and racks to stop automatic permission propagation. If you'd prefer that inheritance rules are not applied to a specific building, room, or rack, check the **Do not propagate rack permissions** option.
+
+In the above example, devices, assets, and PDU in rack NH-CT-88 will be visible to anyone with permission to see the rack. This is useful for a co-location operator who wants to split a rack among different customers. In the rack layout view, a customer with permission to see specific racks and their devices, but not others, will see a grayed-out rack with no information about the devices, assets, and PDUs they are not authorized to view.
+
+## Functional vs. Object Permissions
+
+If role-based access is turned off, admin groups are granted 'functional permissions' that define the menu items that can be seen by users assigned to a group.
+
+<ThemedImage
+  alt="Admin group permissions"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/admin-group-permissions-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/admin-group-permissions-dark.png"),
+  }}
+/>
+
+When role-based access is initially turned on, superusers will still have access to all objects (buildings, rooms, and racks) in the system. However, non-superusers will not see any objects whatsoever if none of the 'allow orphaned objects' checkboxes are selected. Non-superusers will need to be given permission to see the objects again.
+
+### Object Category Field
+
+<ThemedImage
+  alt="Object category field"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/change-object-category-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/change-object-category-dark.png"),
+  }}
+/>
+
+When role-based access is enabled, users will only be able to see a device, asset, or PDU if an Object Category is assigned to that device, asset, or PDU and the user is granted access to that Object Category.
+
+### Add or Edit Object Category
+
+Initially, admin groups were assigned directly to devices, assets, and PDUs. However, because of the vast number of devices, assets, and PDUs, Object Categories were introduced.
+
+Object Categories are located under **Infrastructure > Organization > Object Categories**. To create an object category, you enter a **Name** and an optional **Description**.
+
+<ThemedImage
+  alt="Edit object category"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/edit-object-category-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/edit-object-category-dark.png"),
+  }}
+/>
+
+Admin groups can be assigned to each Object Category to grant view-only or change permission. In the above example, the "Prod" admin group has change permission on the "Development Machines" object category. Any user who has been assigned to "Prod" has permission to modify any device, asset, or PDU that has been assigned the "Development Machines" object category.
+
+For objects that aren't as numerous as devices and assets, object permissions are still created by assigning admin groups directly to these types of objects. These object types include buildings, rooms, racks, customers, purchases, and object categories themselves.
+
+Many users won't need to use Object Categories for devices, assets, and PDUs. Instead, you can simply assign admin groups to buildings, rooms, and racks. If an admin group has permission to a building, they have permission to every object in that building (like every room, rack, device, PDU, and asset). If an admin group has permission to a room, they have permission to every object in that room (that is, every rack, device, PDU, and asset).
+
+## Subnet Categories
+
+Subnet Categories work on subnets exactly like Object Categories work on devices, assets, and PDUs. Create Subnet Categories from the **Resources > Network > Subnet Categories** and assign admin groups to subnet categories just like you do for object categories. Then the subnet categories and their admin group assignments determine which subnets, and which IPs in those subnets, are visible and changeable for a given user.
+
+As with Object Categories, it's not necessary to assign a subnet category to every subnet. If a group is assigned to a VRF Group, then every subnet in that VRF Group will inherit the permissions of the VRF Group. Also, if a subnet is assigned a subnet category, then every child subnet of that subnet will also have the permissions granted by the subnet category.
+
+## Assigning Object Permissions to Admin Groups
+
+Object permissions apply to the following objects: 
+- Buildings 
+- Rooms 
+- Racks 
+- Devices 
+- Assets 
+- Object Categories 
+- PDUs 
+- VRF Groups 
+- Subnet Categories 
+- Purchases
+- Vendors 
+- Customers 
+- Auto Discovery jobs
+
+Object assignments are made either from the list view of the object or the edit page of a specific object. It is also possible to assign object permissions to discovered objects of autodiscovery jobs.
+
+<ThemedImage
+  alt="Edit object category"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/add-groups-action-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/add-groups-action-dark.png"),
+  }}
+  style={{ width: '70%' }} 
+/>
+
+In the example above, we assign three racks to an object permission group. If you click the "Add Groups" action and then click the **hammer icon**, you will see a confirmation page:
+
+<ThemedImage
+  alt="Edit object category"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/add-group-window-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/add-group-window-dark.png"),
+  }}
+/>
+
+Here we are about to assign permission to the three racks listed above the "Prod" admin group. If you click **Add group for selected objects**, you will give the "Prod" group the right to view and edit the selected racks. Leaving the **Change Permissions?** box unchecked means only granting view permission.
+
+Remove previously assigned permissions with the **Delete Groups** action. If you want to delete the "Prod" group's permissions for these racks, select that option. You can change the **Change Permissions?** flag through this dialog as well.
+
+You can also assign permissions from object edit pages as shown above.
+
+The **Add Groups** and **Delete Groups** actions are available for the following objects: 
+- Buildings 
+- Rooms 
+- Racks 
+- VRF Groups
+
+Similarly, the device, asset, and PDU list pages have **Set Object Category** and **Delete Object Category** actions. The Subnet list page has **Set Subnet Category** and **Delete Subnet Category** actions.
+
+## Who Can Assign Admin Groups to Objects?
+
+Superusers are allowed to add, change, and delete groups for objects through the UI, import spreadsheets, or the API. Superusers can also enable non-superusers to have this ability by assigning them add, change, and delete capabilities for "Object Permissions".
+
+<ThemedImage
+  alt="Grant Object Permissions"
+  sources={{
+    light: useBaseUrl("/assets/images/role-based-access-control/grant-object-permissions-light.png"),
+    dark: useBaseUrl("/assets/images/role-based-access-control/grant-object-permissions-dark.png"),
+  }}
+/>
+
+When you turn on role-based access, you will need to go to each admin group and check if they have the object permissions you want. If you give a group add, change, or delete permission, then all users assigned to that group (including non-superusers) will have the ability to add, change, or delete object permissions through the UI, imports, and APIs.
+
+
+## Objects that Do Not Have Explicit Permissions
+
+Certain objects are subject to permissions even though admin groups are not directly granted these permissions.
+
+- Parts are viewable or editable if they are assigned to a device, room, or storage rack that is viewable or editable.
+- UCS Service Profiles are viewable or editable if they are assigned to a device that is viewable or editable.
+- Software components are viewable by all. However, software details are viewable or editable if the software component is in use by a device or end-user is viewable or editable.
+- Services are viewable by all. However, service details are viewable or editable if the service is in use by a device or end-user is viewable or editable.
+- Application components are viewable or editable only if they are attached to a service that is viewable or editable.
+- MAC addresses are viewable or editable if they are attached to a device that is viewable or editable.
+
+## What Happens If an Admin Group Has No Permissions?
+
+The Device42 role-based access system is set up so that if an admin group is assigned no object permissions and no object or subnet categories, then users in that admin group will not be able to see any objects (unless [Orphaned Objects](#orphaned-objects) are allowed). 
+
+As discussed above, if an admin group has access to only one room (and **do not propagate** is unchecked) then users in the admin group will have access to that room and any racks, devices, PDUs, and assets inside the room. However, if the admin group has not been granted access to any subnets, then the users will not see any subnets or IPs in their list pages.
+
+Note: Under certain circumstances, it is possible to see the name of an object without permission. For example, a user with access to a device will see the IP address of the device even if they don't have permission to see the subnet the IP address resides in. However, when they click on the IP address, they will get a permission error.
+
+The following objects and screens do not have object-level permission and are governed only by admin group functional permissions: 
+- Hardware models, PDU models, patch panel models, tap module models, parts models, and similar objects 
+- QR, Device Names, and Asset Number Profiles 
+- Telecom and Power circuits 
+- DNS 
+- OS’s 
+- Passwords (also have their own user/group security) 
+- Lifecycle Event Actions 
+- Misc Functions 
+- Custom Field setup 
+- Monitoring appliances 
+- Org units 
+- Settings 
+- Tags
+
+## Permission Hierarchies
+
+If an admin group is granted access to a building, the admin group is also granted access to all rooms, racks, devices, PDUs, and assets in the building. We call the hierarchy that contains buildings the Device Hierarchy. The rules for the Device Hierarchy are as follows:
+
+- Permission for a building implies permission for all rooms, racks, devices, PDUs, and assets in the building.
+- Permission for a room implies permission for all racks, devices, PDUs, and assets in the room.
+- Permission for a rack implies permission for all devices, PDUs, and assets in the rack (unless the **Do not propagate** box is checked for the rack).
+- Permission for a blade chassis implies permission for all blade devices in the chassis.
+- Permission for a virtual host implies permission for all virtual machines in the host.
+- Permission for a device that is part of a cluster _does not_ imply permission to the cluster device itself. Because a cluster can be made up of devices that reside in multiple physical locations, a cluster device does not have a location attribute. Permissions for those using multi-tenancy will be inherited for cluster member devices, but will not be inherited for the cluster device itself. The only way to create permissions on a cluster object is to assign an object category to the cluster device.
+
+There is a second hierarchy that we call the IP Hierarchy. The rules for the IP Hierarchy are as follows:
+
+- Permission for a VRF group implies permission for all subnets and IP addresses within the VRF group.
+- Permission for a subnet category implies permission for all subnets labeled with that subnet category, all child subnets of those subnets, and all IP addresses within all those subnets.
+- Permission for a parent subnet implies permission for all child subnets (for example, permission for a /20 subnet implies permission for a /24 subnet).
+
+Please note that change permission for an object also applies to the objects beneath it in the hierarchy. For example, if you have change permission for a subnet, you can change any IPs in the subnet and you can add IPs (or child subnets) to the subnet. However, if you have view-only access to the subnet (that is, you do not have change permission), then you can not change any IPs in the subnet and you cannot add IPs to the subnet.
+
+It is possible to grant view-only permission to a room but change permission to specific devices. This would allow users to change the specific devices but not change the other devices in the room.
+
+Note that there is a special scenario when an admin group with change permission is assigned to a building, room, or rack in conjunction with the **"Do Not Propagate** (DNP) option being selected. In this case, members of the admin group will only have view-only permission as the change permission is blocked by the DNP option.
+
+### IPAM Hierarchy Rules
+
+The **Merge and Relocate** subnet capabilities are available to any user with change permission to the to-be-moved subnet and the parent subnet.
+
+Only superusers can create subnets from the subnet list page. However, non-superusers can create a subnet from the subnet tree view.
+
+Only superusers can create parent root subnets. The only exception to this rule is the Ping Sweep Autodiscovery job. If a ping sweep job setup by a non-superuser discovers a root subnet, it will be created.
+
+If you have view but not change permission to a device, you can still add an IP address to the device. This is considered by Device42 to be a modification of the IP address, not the device.
+
+### Device Hierarchy Rules
+
+If you give a group change permission to a room, you should also grant view permission to the building for the room. Otherwise, the user won't be able to select a building and, without a building specified, they won't be able to save the room edit form.
+
+When cloning devices and racks with explicit permissions, those permissions will be copied over to the newly cloned objects. If there are no permissions on a device or rack, it will copy over the next closest parent's object permissions (e.g. if there are no permissions on a device but there are permissions on the rack the device is in, the rack's permissions will be copied over). Also, if a device or rack has multiple groups, only the groups assigned to the current user will be copied over.
+
+When deleting permissions on an object that has objects below it in the hierarchy (for example, deleting a building that has rooms, racks, and devices), removing the permissions on the building will not cascade the delete down the line. So any rooms within the building that you deleted permissions from will still be available to the group.
+
+## Autodiscovery Jobs
+
+When you create or modify an autodiscovery job, you can assign an admin group to the autodiscovery job. This governs which users can view and modify the autodiscovery job. You can also add groups in bulk to multiple jobs from the list view.
+
+For many of the autodiscovery jobs, you can also assign an object category and a subnet category. The object category will then be assigned to any devices, assets, or pdus discovered. The subnet category will be assigned to any discovered subnets.
+
+:::caution
+If you are a non-superuser and you run an autodiscovery without specifying any categories, then you may not be able to view or edit the discovered objects because you will not have permission to see them.
+:::
+
+## Orphaned Objects
+
+An 'orphaned object' is an object (for example, a rack or a subnet) that has no group assigned to it directly _and_ has no group assigned to a parent object. The parent objects of racks are rooms and buildings and the parent objects of subnets are their parent subnets and VRF groups. 
+
+The default is to leave the orphaned objects options unchecked so that orphaned objects are visible to everyone.
+
+The **Allow non-superusers to see orphaned building hierarchy objects** option applies to building hierarchy objects, specifically buildings, rooms, racks, devices, assets, and PDUs. If this option is checked, a non-superuser can view and change any building that has no groups assigned to it _and_ can view and change any room, rack, device, asset, or PDU in the building. 
+
+The **Allow non-superusers to see orphaned IP hierarchy objects** option applies to IP addresses and subnets. If this option is checked, a non-superuser can view and change any subnet that has no groups assigned to it or a parent subnet.
+
+The **Allow non-superusers to see other orphaned objects** option applies to purchases and customers. If this option is checked, a non-superuser can view and change any purchase that has no groups assigned to it.
